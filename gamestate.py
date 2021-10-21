@@ -15,44 +15,14 @@ class GameState:
 
     # -------------------------------------------------
     def save(self):
-        """
-        Salva os dados do tabuleiro para uma string.
-
-        Gera uma string com as peças do tabuleiro separadas por
-        ponto-e-vírgula (';'), de forma que o estado do jogo possa
-        ser comunicado via socket.
-
-        Retorno
-        ----------
-        data: str
-            String de texto com os dados do tabuleiro separados por
-            ponto-e-vírgula (';'), prontos para serem comunicados.     
-        """
         return ';'.join([';'.join(x) for x in self.board])
 
     # -------------------------------------------------
     def restore(self, data):
-        """
-        Restaura os dados do tabuleiro a partir de uma string.
-
-        Lê uma string com as peças do tabuleiro separadas por
-        ponto-e-vírgula (';'), de forma que o estado do jogo possa ser
-        comunicado via socket.
-
-        Parâmetros
-        ----------
-        data: str
-            String de texto com os dados do tabuleiro separados por um
-            ponto-e-vírgula (';'), prontos para serem atualizados neste
-            objeto.
-        """
         self.board = np.reshape(data.split(';'), (3,3)).tolist()
 
     # -------------------------------------------------
     def print(self):
-        """
-        Imprime o tabuleiro em um formato visual.
-        """
         print("+---+---+---+")
         for row in self.board:
             print('|{}|{}|{}|'.format(row[0].center(3, ' '), row[1].center(3, ' '), row[2].center(3, ' ')))
@@ -60,19 +30,6 @@ class GameState:
 
     # -------------------------------------------------
     def move(self, row, col, piece):
-        """
-        Faz uma jogada no tabuleiro, nas posições dadas.
-
-        Parâmetros
-        ----------
-        row: int
-            Número da linha no tabuleiro, no intervalo [0,2].
-        col: int
-            Número da coluna no tabuleiro, no intervalo [0,2].
-        piece: str
-            Letra com o símbolo jogado, entre as opções 'o' e 'x'.        
-        """
-
         # Valida os parâmetros de entrada
         if row < 0 or row > 2:
             raise RuntimeError('Número de linha inválido: {}'.format(row))
@@ -91,15 +48,6 @@ class GameState:
 
     # -------------------------------------------------
     def moveRandom(self, piece):
-        """
-        Faz uma jogada aleatória no tabuleiro, em uma das posições vazias.
-
-        Parâmetros
-        ----------
-        piece: str
-            Letra com o símbolo jogado, entre as opções 'o' e 'x'.
-        """
-
         # Cria uma lista com as posições vazias
         options = []
         for row in range(3):
